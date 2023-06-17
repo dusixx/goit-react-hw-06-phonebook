@@ -1,5 +1,5 @@
 import { string, exact, arrayOf, oneOfType, number } from 'prop-types';
-import { Controls } from './Controls';
+import { Controls } from './Controls/Controls';
 import { IconDelete, IconEdit } from 'styles/icons';
 import { List, Item, Column } from './ContactList.styled';
 

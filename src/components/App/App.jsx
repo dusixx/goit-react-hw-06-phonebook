@@ -7,14 +7,12 @@ import { ContactEditor } from 'components/ContactEditor';
 import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 import { Header } from 'components/Header';
-import { resetContacts, addContact, deleteContact } from 'redux/contactsSlice';
-import { setFilter } from 'redux/filterSlice';
+import { reset, add, remove, getContacts } from 'redux/contactsSlice';
+import { setFilter, getFilter } from 'redux/filterSlice';
 
 //
 // Options
 //
-
-// const LS_KEY_CONTACTS = 'contacts';
 
 const message = {
   ALREADY_EXISTS: `The contact with the same name or number already exists`,
@@ -28,8 +26,8 @@ const message = {
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(({ contacts }) => contacts);
-  const filter = useSelector(({ filter }) => filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const isContactExists = ({ name, number }) =>
     contacts.find(
@@ -39,10 +37,10 @@ export const App = () => {
     );
 
   const filterContacts = () => {
-    const searchStr = filter.toLocaleLowerCase();
+    const searchStr = filter?.toLocaleLowerCase();
 
     return searchStr
-      ? contacts.filter(
+      ? contacts?.filter(
           ({ name, number }) =>
             name.toLocaleLowerCase().includes(searchStr) ||
             number.includes(searchStr)
@@ -55,7 +53,7 @@ export const App = () => {
     const data = { name, number: formatNumber(number) };
 
     if (!isContactExists(data)) {
-      dispatch(addContact(data));
+      dispatch(add(data));
       toast.success(message.ADDED_SUCCESS);
       return true;
     }
@@ -66,7 +64,7 @@ export const App = () => {
   const handleControlClick = (id, controlName) => {
     switch (controlName) {
       case 'delete':
-        return dispatch(deleteContact(id));
+        return dispatch(remove(id));
       case 'edit':
         return toast.warn(message.ACTION_NOT_SUPPORTED);
       default:
@@ -77,13 +75,13 @@ export const App = () => {
 
   return (
     <Container>
-      <Header onResetClick={() => dispatch(resetContacts())} />
+      <Header onResetClick={() => dispatch(reset())} />
 
       <Block style={{ padding: '15px' }}>
         <ContactEditor onSubmit={handleEditorSubmit} />
       </Block>
 
-      {contacts.length > 0 && (
+      {contacts?.length > 0 && (
         <Block style={{ padding: '10px' }}>
           <Filter
             value={filter}

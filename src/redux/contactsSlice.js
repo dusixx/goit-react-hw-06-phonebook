@@ -7,18 +7,17 @@ const contactsSlice = createSlice({
   initialState: initialContacts,
 
   reducers: {
-    resetContacts: () => initialContacts,
+    reset: () => initialContacts,
 
-    addContact: (state, { payload: newContact }) => {
-      state.push({ ...newContact, id: getId() });
+    add: (contacts, { payload: newContact }) => {
+      contacts.push({ ...newContact, id: getId() });
     },
 
-    deleteContact: (state, { payload: contactId }) =>
-      state.filter(({ id }) => id !== contactId),
+    remove: (contacts, { payload: contactId }) =>
+      contacts.filter(({ id }) => id !== contactId),
   },
 });
 
-export const { resetContacts, addContact, deleteContact } =
-  contactsSlice.actions;
-
+export const getContacts = ({ contacts }) => contacts;
+export const { reset, add, remove } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
