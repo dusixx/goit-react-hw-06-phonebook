@@ -1,14 +1,14 @@
 import { ToastContainer, toast } from 'react-toastify';
 import { Container } from './App.styled';
 import { Block } from 'styles/shared';
-import { initialContacts } from 'data/contacts';
 import { formatNumber } from 'utils';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { ContactEditor } from 'components/ContactEditor';
 import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 import { Header } from 'components/Header';
-import { addContact, deleteContact, setContacts, setFilter } from 'redux/store';
+import { resetContacts, addContact, deleteContact } from 'redux/contactsSlice';
+import { setFilter } from 'redux/filterSlice';
 
 //
 // Options
@@ -27,9 +27,9 @@ const message = {
 //
 
 export const App = () => {
+  const dispatch = useDispatch();
   const contacts = useSelector(({ contacts }) => contacts);
   const filter = useSelector(({ filter }) => filter);
-  const dispatch = useDispatch();
 
   const isContactExists = ({ name, number }) =>
     contacts.find(
@@ -77,7 +77,7 @@ export const App = () => {
 
   return (
     <Container>
-      <Header onResetClick={() => dispatch(setContacts(initialContacts))} />
+      <Header onResetClick={() => dispatch(resetContacts())} />
 
       <Block style={{ padding: '15px' }}>
         <ContactEditor onSubmit={handleEditorSubmit} />
