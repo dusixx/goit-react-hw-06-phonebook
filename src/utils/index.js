@@ -24,7 +24,7 @@ export const parseCSSValue = v => {
 export const cap = v => (isStr(v) && v ? v[0].toUpperCase() + v.slice(1) : '');
 
 let id = 0;
-export const getId = () => `id-${(id++).toString(16)}`;
+export const getId = () => `${(id++).toString(24)}`;
 
 export const formatNumber = number => {
   return number
