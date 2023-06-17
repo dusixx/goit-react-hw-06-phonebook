@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Container } from './App.styled';
 import { Block } from 'styles/shared';
@@ -9,7 +8,7 @@ import { ContactEditor } from 'components/ContactEditor';
 import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 import { Header } from 'components/Header';
-import { addContact, deleteContact, setContacts } from 'redux/store';
+import { addContact, deleteContact, setContacts, setFilter } from 'redux/store';
 
 //
 // Options
@@ -28,8 +27,8 @@ const message = {
 //
 
 export const App = () => {
-  const [filter, setFilter] = useState('');
   const contacts = useSelector(({ contacts }) => contacts);
+  const filter = useSelector(({ filter }) => filter);
   const dispatch = useDispatch();
 
   const isContactExists = ({ name, number }) =>
@@ -88,7 +87,7 @@ export const App = () => {
         <Block style={{ padding: '10px' }}>
           <Filter
             value={filter}
-            onChange={e => setFilter(e?.target.value || '')}
+            onChange={e => dispatch(setFilter(e?.target.value || ''))}
           />
         </Block>
       )}
