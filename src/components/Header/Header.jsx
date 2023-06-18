@@ -15,7 +15,10 @@ export const Header = () => {
         PhoneBook
       </Logo>
 
-      <ButtonSecondary title={BTN_TITLE} onClick={update}>
+      {/* !! Нельзя onClick={update} 
+        Это равносильно e => update(e) и вызовет ошибку сериализации
+      */}
+      <ButtonSecondary title={BTN_TITLE} onClick={() => update()}>
         <IconRefresh size={20} />
       </ButtonSecondary>
     </Container>
