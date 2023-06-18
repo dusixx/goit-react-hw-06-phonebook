@@ -14,7 +14,7 @@ export const ContactList = ({ controlsHeight, rowHeight }) => {
   const { contacts } = useContacts();
 
   const filterContacts = () => {
-    const searchStr = filter?.toLocaleLowerCase();
+    const searchStr = filter?.trim().toLocaleLowerCase();
 
     return searchStr
       ? contacts?.filter(

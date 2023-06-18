@@ -15,6 +15,8 @@ const ADDED_SUCCESS = `The contact was added successfully`;
 // ContactEditor
 //
 
+const formatName = s => s.trim().replace(/\s+/g, ' ');
+
 export const ContactEditor = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -35,7 +37,11 @@ export const ContactEditor = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const data = { name, number: formatNumber(number) };
+    const data = {
+      name: formatName(name),
+      number: formatNumber(number),
+    };
+
     if (isContactExists(data)) return toast.error(ALREADY_EXISTS);
 
     add(data);
@@ -55,7 +61,7 @@ export const ContactEditor = () => {
           title={fieldData.name.title}
           icon={fieldData.name.icon}
           value={name}
-          onChange={e => setName(e?.target.value || '')}
+          onChange={e => setName(e?.target.value ?? '')}
           required
         />
 
@@ -69,7 +75,7 @@ export const ContactEditor = () => {
           title={fieldData.number.title}
           icon={fieldData.number.icon}
           value={number}
-          onChange={e => setNumber(e?.target.value || '')}
+          onChange={e => setNumber(e?.target.value ?? '')}
           required
         />
 

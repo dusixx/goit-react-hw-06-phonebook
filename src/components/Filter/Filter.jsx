@@ -4,7 +4,7 @@ import { useContacts, useFilter } from 'redux/hooks';
 import { Block } from 'styles/shared';
 
 export const Filter = () => {
-  const { filter, setFilter } = useFilter();
+  const { filter, update } = useFilter();
   const { contacts } = useContacts();
 
   if (!contacts.length) return null;
@@ -17,7 +17,7 @@ export const Filter = () => {
         name="filter"
         placeholder="Filter"
         autoComplete="off"
-        onChange={e => setFilter(e?.target.value.trim() || '')}
+        onChange={e => update(e?.target.value ?? '')}
         value={filter}
       />
     </Block>
