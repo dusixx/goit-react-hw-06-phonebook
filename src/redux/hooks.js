@@ -24,6 +24,6 @@ export const useContacts = () => {
     {}
   );
 
-  // вместо [reset, add, ...] чтобы не привязываться к порядку в массиве
+  // вместо [add, remove, ...] чтобы не привязываться к порядку в массиве
   return { contacts, ...dispatchedActions };
 };

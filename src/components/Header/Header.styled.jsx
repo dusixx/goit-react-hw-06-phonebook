@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { FlexCentered } from 'styles/shared';
+import { calcCSSValue } from 'utils';
 
 export const Container = styled.div`
   ${FlexCentered(`justify-content: space-between`)}
-  width: ${({ width }) => width || '100%'};
+  width: ${({ width }) => calcCSSValue(width) || '100%'};
 `;
 
 export const Logo = styled.a`

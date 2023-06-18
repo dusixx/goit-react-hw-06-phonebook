@@ -3,8 +3,10 @@ import { IconContactsBook, IconRefresh } from 'styles/icons';
 import { ButtonSecondary } from 'styles/shared';
 import { Container, Logo } from './Header.styled';
 
+const BTN_TITLE = 'Reset to initial';
+
 export const Header = () => {
-  const { reset } = useContacts();
+  const { update } = useContacts();
 
   return (
     <Container>
@@ -12,7 +14,8 @@ export const Header = () => {
         <IconContactsBook size={22} />
         PhoneBook
       </Logo>
-      <ButtonSecondary title="Reset to initial" onClick={() => reset()}>
+
+      <ButtonSecondary title={BTN_TITLE} onClick={update}>
         <IconRefresh size={20} />
       </ButtonSecondary>
     </Container>

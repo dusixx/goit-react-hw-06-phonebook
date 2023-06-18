@@ -8,24 +8,24 @@ const ACTION_NOT_SUPPORTED = 'Action not supported';
 
 //
 // Controls
-// 
+//
 
-export const Controls = ({ value, targetId, height }) => {
+export const Controls = ({ items, targetId, height }) => {
   const { remove } = useContacts();
 
+  // TODO: добавить edit
   const handleControlClick = (id, controlName) => {
     switch (controlName) {
       case 'delete':
         return remove(id);
-      case 'edit':
-        return toast.warn(ACTION_NOT_SUPPORTED);
       default:
+        toast.warn(ACTION_NOT_SUPPORTED);
     }
   };
 
   return (
     <ControlsList height={height}>
-      {Object.entries(value).map(([name, Icon]) => {
+      {Object.entries(items).map(([name, Icon]) => {
         return (
           <Control key={getId()}>
             <ControlBtn
@@ -45,7 +45,7 @@ export const Controls = ({ value, targetId, height }) => {
 };
 
 Controls.propTypes = {
-  value: objectOf(func),
+  items: objectOf(func),
   targetId: string,
   height: oneOfType([string, number]),
 };

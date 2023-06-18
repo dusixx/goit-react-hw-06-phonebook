@@ -4,6 +4,7 @@ import { controlsData } from './controlsData';
 import { List, Item, Column } from './ContactList.styled';
 import { useFilter, useContacts } from 'redux/hooks';
 import { Block } from 'styles/shared';
+
 //
 // ContactList
 //
@@ -37,7 +38,7 @@ export const ContactList = ({ controlsHeight, rowHeight }) => {
               <Column>{number}</Column>
               <Column>
                 <Controls
-                  value={controlsData}
+                  items={controlsData}
                   height={controlsHeight}
                   targetId={id}
                 />
@@ -51,5 +52,5 @@ export const ContactList = ({ controlsHeight, rowHeight }) => {
 };
 
 ContactList.propTypes = {
-  itemHeight: oneOfType([string, number]),
+  rowHeight: oneOfType([string, number]),
 };

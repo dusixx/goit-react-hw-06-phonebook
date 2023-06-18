@@ -7,7 +7,7 @@ const contactsSlice = createSlice({
   initialState: initialContacts,
 
   reducers: {
-    reset: () => initialContacts,
+    update: (contacts, { payload: newValue = initialContacts }) => newValue,
 
     add: (contacts, { payload: newContact }) => {
       contacts.push({ ...newContact, id: getId() });
