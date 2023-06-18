@@ -28,14 +28,12 @@ export const TextField = ({
           {...restProps}
         />
 
-        {/* Icon */}
         {ReactIcon && (
           <IconWrapper>
             <ReactIcon size="100%" />
           </IconWrapper>
         )}
 
-        {/* Clear btn */}
         {value && (
           <ClearBtn type="button" onClick={() => onChange(null)}>
             <IconClose size="100%" />

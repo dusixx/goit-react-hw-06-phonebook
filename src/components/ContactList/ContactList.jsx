@@ -1,48 +1,55 @@
-import { string, exact, arrayOf, oneOfType, number } from 'prop-types';
+import { string, oneOfType, number } from 'prop-types';
 import { Controls } from './Controls/Controls';
-import { IconDelete, IconEdit } from 'styles/icons';
+import { controlsData } from './controlsData';
 import { List, Item, Column } from './ContactList.styled';
+import { useFilter, useContacts } from 'redux/hooks';
+import { Block } from 'styles/shared';
+//
+// ContactList
+//
 
-const controlsData = {
-  edit: IconEdit,
-  delete: IconDelete,
-};
+export const ContactList = ({ controlsHeight, rowHeight }) => {
+  const { filter } = useFilter();
+  const { contacts } = useContacts();
 
-export const ContactList = ({
-  value,
-  controlsHeight,
-  itemHeight,
-  ...restProps
-}) => {
+  const filterContacts = () => {
+    const searchStr = filter?.toLocaleLowerCase();
+
+    return searchStr
+      ? contacts?.filter(
+          ({ name, number }) =>
+            name.toLocaleLowerCase().includes(searchStr) ||
+            number.includes(searchStr)
+        )
+      : contacts;
+  };
+
+  const filtered = filterContacts(contacts);
+  if (!filtered.length) return null;
+
   return (
-    <List>
-      {value.map(({ id, name, number }) => {
-        return (
-          <Item key={id} height={itemHeight}>
-            <Column>{name}</Column>
-            <Column>{number}</Column>
-            <Column>
-              <Controls
-                value={controlsData}
-                height={controlsHeight}
-                targetId={id}
-                {...restProps}
-              />
-            </Column>
-          </Item>
-        );
-      })}
-    </List>
+    <Block maxHeight="70vh">
+      <List>
+        {filtered.map(({ id, name, number }) => {
+          return (
+            <Item key={id} height={rowHeight}>
+              <Column>{name}</Column>
+              <Column>{number}</Column>
+              <Column>
+                <Controls
+                  value={controlsData}
+                  height={controlsHeight}
+                  targetId={id}
+                />
+              </Column>
+            </Item>
+          );
+        })}
+      </List>
+    </Block>
   );
 };
 
 ContactList.propTypes = {
   itemHeight: oneOfType([string, number]),
-  value: arrayOf(
-    exact({
-      name: string.isRequired,
-      id: string.isRequired,
-      number: string.isRequired,
-    })
-  ),
 };

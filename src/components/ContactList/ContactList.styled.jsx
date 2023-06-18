@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FlexCentered } from 'styles/shared';
+import { calcCSSValue } from 'utils';
 
 export const List = styled.ul`
   @media screen and (max-width: 400px) {
@@ -13,7 +14,7 @@ export const List = styled.ul`
 
 export const Item = styled.li`
   ${FlexCentered('justify-content: space-between')};
-  height: ${({ height }) => height};
+  height: ${({ height }) => calcCSSValue(height)};
   padding-left: 10px;
 `;
 
