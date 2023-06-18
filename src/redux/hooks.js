@@ -2,27 +2,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { contactsActions } from './contactsSlice';
 import { filterActions } from './filterSlice';
 
-export const useFilter = () => {
+const useDispatchedActions = actions => {
   const dispatch = useDispatch();
-  const { setFilter: setFilterAction } = filterActions;
-  const filter = useSelector(state => state?.filter);
-  const setFilter = value => dispatch(setFilterAction(value));
 
-  // вместо [filter, setFilter] чтобы было единообразно с useContacts
-  return { filter, setFilter };
+  return Object.entries(actions).reduce((res, [actionName, func]) => {
+    res[actionName] = value => dispatch(func(value));
+    return res;
+  }, {});
+};
+
+export const useFilter = () => {
+  const filter = useSelector(state => state?.filter);
+  const dispatchedActions = useDispatchedActions(filterActions);
+
+  return { filter, ...dispatchedActions };
 };
 
 export const useContacts = () => {
-  const dispatch = useDispatch();
   const contacts = useSelector(state => state?.contacts);
-
-  const dispatchedActions = Object.entries(contactsActions).reduce(
-    (res, [actionName, func]) => {
-      res[actionName] = value => dispatch(func(value));
-      return res;
-    },
-    {}
-  );
+  const dispatchedActions = useDispatchedActions(contactsActions);
 
   // вместо [add, remove, ...] чтобы не привязываться к порядку в массиве
   return { contacts, ...dispatchedActions };
