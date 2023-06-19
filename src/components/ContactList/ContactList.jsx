@@ -4,6 +4,7 @@ import { controlsData } from './controlsData';
 import { List, Item, Column } from './ContactList.styled';
 import { useFilter, useContacts } from 'redux/hooks';
 import { Block } from 'styles/shared';
+import { useCallback } from 'react';
 
 //
 // ContactList
@@ -13,7 +14,7 @@ export const ContactList = ({ controlsHeight, rowHeight }) => {
   const { filter } = useFilter();
   const { contacts } = useContacts();
 
-  const filterContacts = () => {
+  const filterContacts = useCallback((contacts, filter) => {
     const searchStr = filter?.trim().toLocaleLowerCase();
 
     return searchStr
@@ -23,9 +24,9 @@ export const ContactList = ({ controlsHeight, rowHeight }) => {
             number.includes(searchStr)
         )
       : contacts;
-  };
+  }, []);
 
-  const filtered = filterContacts(contacts);
+  const filtered = filterContacts(contacts, filter);
   if (!filtered.length) return null;
 
   return (
